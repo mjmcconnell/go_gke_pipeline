@@ -4,8 +4,12 @@ metadata:
   name: {{ include "proxy.fullname" . }}
   labels:
     {{- include "proxy.labels" . | nindent 4 }}
+  annotations:
+    cloud.google.com/backend-config: '{"default": "{{ include "proxy.fullname" . }}"}'
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   type: {{ .Values.service.type }}
+  externalTrafficPolicy: Local
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
@@ -13,3 +17,4 @@ spec:
       name: http
   selector:
     {{- include "proxy.selectorLabels" . | nindent 4 }}
+  sessionAffinity: ClientIP
