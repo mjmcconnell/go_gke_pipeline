@@ -4,29 +4,19 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"log"
 
 	"github.com/gorilla/mux"
+
+	"github.com/mjmcconnell/go_gke_pipeline/apps/proxy/pkg/endpoints"
 )
 
 var RoutedServerHost, _ = url.Parse("http://webserver_1:8081/")
 var DefaultServerHost, _ = url.Parse("http://webserver_2:8082/")
 
-
 func Run() error {
 	router := mux.NewRouter()
 
-	router.Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`Hello world`))
-	})
-
-	router.Path("/foo").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Recieved request for foo endpoint")
-
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`Hello foo`))
-	})
+	endpoints.MetaHandler{}.Register(router)
 
 	reverseProxy := httputil.NewSingleHostReverseProxy(DefaultServerHost)
 	reverseProxy.Director = routeTraffic

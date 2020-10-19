@@ -4,6 +4,8 @@ services:
 
     proxy:
       image: golang:1.15
+      environment:
+        GOPATH: /go
       volumes:
         - ./apps/proxy:/proxy
       ports:
