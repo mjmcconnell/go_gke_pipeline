@@ -24,5 +24,5 @@ go.build:
 
 .PHONY: docker.build
 docker.build:
-	docker build . -t mjmcconnell/go-gke-pipeline-proxy:0.0.1
-	docker push mjmcconnell/go-gke-pipeline-proxy:0.0.1
+	docker build . -t mjmcconnell/go-gke-pipeline-proxy:0.0.5
+	docker push mjmcconnell/go-gke-pipeline-proxy:0.0.5

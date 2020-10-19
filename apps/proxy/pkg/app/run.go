@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"log"
 
 	"github.com/gorilla/mux"
 )
@@ -15,9 +16,16 @@ var DefaultServerHost, _ = url.Parse("http://webserver_2:8082/")
 func Run() error {
 	router := mux.NewRouter()
 
-	router.PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	router.Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`Hello world`))
+	})
+
+	router.Path("/foo").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Recieved request for foo endpoint")
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`Hello foo`))
 	})
 
 	reverseProxy := httputil.NewSingleHostReverseProxy(DefaultServerHost)
