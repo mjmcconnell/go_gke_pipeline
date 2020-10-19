@@ -9,4 +9,4 @@ services:
       ports:
         - 8080:8080
       working_dir: /proxy
-      command: make run
+      comman: make run
