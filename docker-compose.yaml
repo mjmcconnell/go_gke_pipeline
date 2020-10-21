@@ -3,7 +3,7 @@ version: "3"
 services:
 
     proxy:
-      image: golang:1.15
+      image: golang:1.15.3
       environment:
         GOPATH: /go
       volumes:

@@ -21,8 +21,3 @@ watcher.install: go.mod
 go.build:
 	rm -rf ${BUILD_DIR}
 	go build -o ${BINARY_DIR}/proxy github.com/mjmcconnell/go_gke_pipeline/apps/proxy/cmd/proxy
-
-.PHONY: docker.build
-docker.build:
-	docker build . -t mjmcconnell/go-gke-pipeline-proxy:0.0.5
-	docker push mjmcconnell/go-gke-pipeline-proxy:0.0.5

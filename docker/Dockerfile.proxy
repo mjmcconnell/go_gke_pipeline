@@ -7,11 +7,11 @@ RUN apk add --no-cache \
 
 WORKDIR /proxy
 
-COPY cmd/ cmd/
-COPY pkg/ pkg/
-COPY go.mod go.mod
-COPY go.sum go.sum
-COPY Makefile Makefile
+COPY apps/proxy/cmd/ cmd/
+COPY apps/proxy/pkg/ pkg/
+COPY apps/proxy/go.mod go.mod
+COPY apps/proxy/go.sum go.sum
+COPY apps/proxy/Makefile Makefile
 
 RUN make go.build
 
