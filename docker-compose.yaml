@@ -11,11 +11,11 @@ services:
       - 8080:8080
     command: make run
 
-  entrypoint:
+  enrichment:
     image: golang:1.15.6
     working_dir: /app
     volumes:
-        - ./apps/entrypoint:/app
+        - ./apps/enrichment:/app
     ports:
       - 8081:8081
     command: make run

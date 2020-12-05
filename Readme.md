@@ -40,7 +40,7 @@ Tracking is useful for keeping processing requests in a non blocking format, and
 
 
 ## Services
-###Entrypoint API
+### Entrypoint API
 * Create tracking span, and add it to the client request
 * Create datastore record
 * Pass client request to the enrichment API
