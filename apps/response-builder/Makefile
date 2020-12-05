@@ -11,7 +11,7 @@ help: ## Lists all commands.
 
 .PHONY: watcher.install
 run: watcher.install
-	cd cmd/entrypoint/ && watcher
+	cd cmd/response-builder/ && watcher
 
 .PHONY: watcher.install
 watcher.install: go.mod
@@ -20,4 +20,4 @@ watcher.install: go.mod
 .PHONY: go.build
 go.build:
 	rm -rf ${BUILD_DIR}
-	go build -o ${BINARY_DIR}/entrypoint github.com/mjmcconnell/go_gke_pipeline/apps/entrypoint/cmd/entrypoint
+	go build -o ${BINARY_DIR}/response-builder github.com/mjmcconnell/go_gke_pipeline/apps/response-builder/cmd/response-builder
