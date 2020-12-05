@@ -11,7 +11,7 @@ help: ## Lists all commands.
 
 .PHONY: watcher.install
 run: watcher.install
-	cd cmd/proxy/ && watcher
+	cd cmd/enrichment/ && watcher
 
 .PHONY: watcher.install
 watcher.install: go.mod
@@ -20,4 +20,4 @@ watcher.install: go.mod
 .PHONY: go.build
 go.build:
 	rm -rf ${BUILD_DIR}
-	go build -o ${BINARY_DIR}/proxy github.com/mjmcconnell/go_gke_pipeline/apps/proxy/cmd/proxy
+	go build -o ${BINARY_DIR}/enrichment github.com/mjmcconnell/go_gke_pipeline/apps/enrichment/cmd/enrichment
