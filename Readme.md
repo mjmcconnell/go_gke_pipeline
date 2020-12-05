@@ -8,6 +8,7 @@ Tracking is useful for keeping processing requests in a non blocking format, and
 
 ## Infrastructure
 * Chef -> Secure base image
+  * https://supermarket.chef.io/cookbooks/os-hardening
 * Packer -> Docker Image
 * Terraform -> Kubernetes
 * [Helm](https://helm.sh/) -> Kubernets resources
