@@ -1,8 +1,17 @@
+DOCKER_RUN = docker run -it -v ${PWD}/${APP_DIR}:/app --workdir /app ${DOCKER_IMAGE}
+
+all: run chef packer
+.PHONY: all
+
 run:
 	docker-compose up
 
 chef:
-	docker run -it -v ${PWD}/build/chef:/app --workdir /app chef/chefdk:4.9.17 berks vendor
+	$(eval APP_DIR := build/chef)
+	$(eval DOCKER_IMAGE := chef/chefdk:4.9.17)
+	$(DOCKER_RUN) berks vendor
 
 packer:
-	docker run -it -v ${PWD}/build:/app --workdir /app hashicorp/packer:1.6.5 build /app/packer/docker-image.json
+	$(eval APP_DIR := build)
+	$(eval DOCKER_IMAGE := hashicorp/packer:1.6.5)
+	$(DOCKER_RUN) build /app/packer/docker-image.json
