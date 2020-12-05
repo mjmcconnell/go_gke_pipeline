@@ -1,14 +1,33 @@
 version: "3"
 
 services:
+  # Applications
+  entrypoint:
+    image: golang:1.15.6
+    working_dir: /app
+    volumes:
+        - ./apps/entrypoint:/app
+    ports:
+      - 8080:8080
+    command: make run
 
-    proxy:
-      image: golang:1.15.3
-      environment:
-        GOPATH: /go
-      volumes:
-        - ./apps/proxy:/proxy
-      ports:
-        - 8080:8080
-      working_dir: /proxy
-      command: make run
+  entrypoint:
+    image: golang:1.15.6
+    working_dir: /app
+    volumes:
+        - ./apps/entrypoint:/app
+    ports:
+      - 8081:8081
+    command: make run
+
+  response-builder:
+    image: golang:1.15.6
+    working_dir: /app
+    volumes:
+        - ./apps/response-builder:/app
+    ports:
+      - 8082:8082
+    command: make run
+
+  # Datastores
+  # Monitoring

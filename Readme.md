@@ -45,7 +45,7 @@ Tracking is useful for keeping processing requests in a non blocking format, and
 * Create datastore record
 * Pass client request to the enrichment API
 * Wait for record to be finalised
-  * Redirect loop
+  * Redirect loopg
 * Return response to client
 
 ### Enrichment API
