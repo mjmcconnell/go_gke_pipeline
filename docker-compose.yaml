@@ -30,4 +30,8 @@ services:
     command: make run
 
   # Datastores
+  redis:
+    image: redis:6.0.9
+    volumes:
+      - ./local/redis.conf:/usr/local/etc/redis/redis.conf
   # Monitoring
