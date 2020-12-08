@@ -1,0 +1,16 @@
+ARG alphine_version
+ARG golang_version
+
+FROM golang:$golang_version as builder
+
+ARG app_name
+
+WORKDIR /app
+
+COPY apps/$app_name/cmd/ cmd/
+COPY apps/$app_name/pkg/ pkg/
+COPY apps/$app_name/go.mod go.mod
+COPY apps/$app_name/go.sum go.sum
+COPY apps/$app_name/Makefile Makefile
+
+RUN make go.build

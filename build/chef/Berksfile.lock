@@ -1,5 +1,0 @@
-DEPENDENCIES
-  os-hardening (~> 4.0.0)
-
-GRAPH
-  os-hardening (4.0.0)

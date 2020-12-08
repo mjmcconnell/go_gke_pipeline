@@ -3,7 +3,7 @@ version: "3"
 services:
   # Applications
   entrypoint:
-    image: golang:1.15.6
+    image: pipeline-entrypoint:0.0.1
     working_dir: /app
     volumes:
         - ./apps/entrypoint:/app
@@ -12,7 +12,7 @@ services:
     command: make run
 
   enrichment:
-    image: golang:1.15.6
+    image: pipeline-enrichment:0.0.1
     working_dir: /app
     volumes:
         - ./apps/enrichment:/app
@@ -21,7 +21,7 @@ services:
     command: make run
 
   response-builder:
-    image: golang:1.15.6
+    image: pipeline-response-builder:0.0.1
     working_dir: /app
     volumes:
         - ./apps/response-builder:/app

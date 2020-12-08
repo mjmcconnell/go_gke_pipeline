@@ -1,3 +1,0 @@
-source "https://supermarket.chef.io"
-
-cookbook 'os-hardening', '~> 4.0.0'
