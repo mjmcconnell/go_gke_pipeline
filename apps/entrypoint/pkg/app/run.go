@@ -2,6 +2,8 @@ package app
 
 import (
 	"net/http"
+	"os"
+	"os/signal"
 
 	"github.com/gorilla/mux"
 
@@ -10,10 +12,19 @@ import (
 
 func Run() error {
 
-	// Start the private server in the background
-	go func() { startPrivateServer() }()
+	srvError := make(chan error)
+	// Start the private server
+	go func() { srvError <- startPrivateServer() }()
 	// Start the public server
-	startPublicServer()
+	go func() { srvError <- startPublicServer() }()
+
+	// Check if an error has occured during a servers startup
+	// Else wait until the system sends an interrupt to the application
+	select {
+	case err := <-srvError:
+		return err
+	case <-sysInterrupt():
+	}
 
 	return nil
 }
@@ -30,4 +41,10 @@ func startPrivateServer() error {
 	endpoints.MetaHandler{}.Register(router)
 	err := http.ListenAndServe(":8888", router)
 	return err
+}
+
+func sysInterrupt() <-chan os.Signal {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	return c
 }
