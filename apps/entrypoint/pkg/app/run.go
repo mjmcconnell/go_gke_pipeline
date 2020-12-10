@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/mjmcconnell/go_gke_pipeline/apps/entrypoint/pkg/endpoints"
+	"github.com/mjmcconnell/go_gke_pipeline/apps/entrypoint/pkg/monitoring"
 )
 
 func Run() error {
@@ -31,6 +32,8 @@ func Run() error {
 
 func startPublicServer() error {
 	router := mux.NewRouter()
+	router.Use(monitoring.LoggingMiddleware)
+
 	endpoints.MainHandler{}.Register(router)
 	err := http.ListenAndServe(":8080", router)
 	return err
