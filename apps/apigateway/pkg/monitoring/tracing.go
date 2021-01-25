@@ -1,6 +1,7 @@
 package monitoring
 
 import (
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
@@ -19,3 +20,5 @@ func InitTracer() func() {
 	}
 	return flush
 }
+
+var Tracer = otel.Tracer("api-gateway")

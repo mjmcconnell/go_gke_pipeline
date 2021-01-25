@@ -11,7 +11,7 @@ help: ## Lists all commands.
 
 .PHONY: run
 run: watcher.install
-	cd cmd/api_gateway/ && watcher
+	cd cmd/apigateway/ && watcher
 
 .PHONY: watcher.install
 watcher.install: go.mod
@@ -20,4 +20,4 @@ watcher.install: go.mod
 .PHONY: go.build
 go.build:
 	rm -rf ${BUILD_DIR}
-	go build -o ${BINARY_DIR}/api_gateway github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/cmd/api_gateway
+	go build -o ${BINARY_DIR}/apigateway github.com/mjmcconnell/go_gke_pipeline/apps/apigateway/cmd/apigateway

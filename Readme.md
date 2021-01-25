@@ -24,14 +24,22 @@ Tracking is useful for keeping processing requests in a non blocking format, and
 * [Jaeger](https://www.jaegertracing.io)
   * https://github.com/jaegertracing/jaeger-operator
 
-## Datastore:
-* Redis (with keyspace event notifications)
-
 ## Request flow:
-* client request
-* entrypoint
-  * Adds meta data to the request
-* client response
+* Client request
+* API gateway
+  * Validates request
+    * Failing requests return an error to the client
+  * Determine which service should handle query
+  * Message is placed sent to a given PubSub topic
+* Secondary service
+  * Picks up message from PubSub subscription
+  * Processes request
+  * Publishes response back onto the PubSub, for the API gateway to consume
+* API gateway
+  * Watches for responses
+  * Gets response
+    * Either directly from the PubSub message or Redis
+  * Response is sent back to the client
 
 ## Services
 

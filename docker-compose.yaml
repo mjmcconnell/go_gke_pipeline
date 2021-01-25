@@ -2,23 +2,17 @@ version: "3"
 
 services:
   # Applications
-  api_gateway:
-    image: pipeline-api_gateway:0.0.1
+  apigateway:
+    image: pipeline-apigateway:0.0.1
     working_dir: /app
     environment:
       GOPROXY: direct
     volumes:
-        - ./apps/api_gateway:/app
+        - ./apps/apigateway:/app
     ports:
       - 8080:8080
       - 8880:8888
     command: make run
-
-  # # Datastores
-  # redis:
-  #   image: redis:6.0.9
-  #   volumes:
-  #     - ./local/redis.conf:/usr/local/etc/redis/redis.conf
 
   # Monitoring
   jaeger:

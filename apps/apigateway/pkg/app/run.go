@@ -8,8 +8,8 @@ import (
 	"github.com/gorilla/mux"
 	middleware "go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 
-	"github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/pkg/endpoints"
-	"github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/pkg/monitoring"
+	"github.com/mjmcconnell/go_gke_pipeline/apps/apigateway/pkg/endpoints"
+	"github.com/mjmcconnell/go_gke_pipeline/apps/apigateway/pkg/monitoring"
 )
 
 func Run() error {

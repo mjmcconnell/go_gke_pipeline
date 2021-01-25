@@ -1,4 +1,4 @@
-module github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway
+module github.com/mjmcconnell/go_gke_pipeline/apps/apigateway
 
 go 1.15
 

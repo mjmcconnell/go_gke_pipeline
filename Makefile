@@ -9,15 +9,15 @@ DOCKER_BUILD = docker build \
 		--build-arg golang_version=$(GOLANG_VERSION) \
 		.
 
-all: run build.all build.api_gateway
+all: run build.all build.apigateway
 .PHONY: all
 
 run:
 	docker-compose up
 
-build.all: build.api_gateway
+build.all: build.apigateway
 
-build.api_gateway: APP_NAME := api_gateway
-build.api_gateway: APP_LANG := golang
-build.api_gateway:
+build.apigateway: APP_NAME := apigateway
+build.apigateway: APP_LANG := golang
+build.apigateway:
 	${DOCKER_BUILD}
