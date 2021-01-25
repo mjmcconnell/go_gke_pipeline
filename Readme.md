@@ -7,9 +7,6 @@ One of the main objects, is to be able to effectively track a request as it goes
 Tracking is useful for keeping processing requests in a non blocking format, and allow to see the latency of the request at each step of its journey, and the overall request time.
 
 ## Infrastructure
-* Chef -> Secure base image
-  * https://supermarket.chef.io/cookbooks/os-hardening
-* Packer -> Docker Image
 * Terraform -> Kubernetes
 * [Helm](https://helm.sh/) -> Kubernets resources
 * Vault -> Secrets
@@ -18,42 +15,33 @@ Tracking is useful for keeping processing requests in a non blocking format, and
 * Github CI
 
 ## Pipeline:
-* Lambda style applications that enrich data
+* Lambda style applications that enrich data as it flows through the system
 * Each app records heart beat of request as it passes through
 
 ## Monitoring:
 * Prometheus
 * Grafana
 * [Jaeger](https://www.jaegertracing.io)
+  * https://github.com/jaegertracing/jaeger-operator
 
 ## Datastore:
 * Redis (with keyspace event notifications)
 
 ## Request flow:
--> client request
--> entrypoint
-    Adds meta data to the request
--> enrichment
-    Adds enriches the user data
--> build response
-    Builds the response object for the client
--> client response
-
+* client request
+* entrypoint
+  * Adds meta data to the request
+* client response
 
 ## Services
-### Entrypoint API
+
+### API Gateway
 * Create tracking span, and add it to the client request
 * Create datastore record
 * Pass client request to the enrichment API
 * Wait for record to be finalised
   * Redirect loopg
 * Return response to client
-
-### Enrichment API
-* Pull data from the datastore, and enrich the user provided data
-
-### Response Builder
-* Build a response object based of the clients request
 
 ## Setup
 
@@ -72,3 +60,8 @@ To run application locally within a kubernetes environment, you can install [min
 To get the application running locally, simply run:
 
     make docker.run
+
+## Packages
+
+[Logrus](golang logrus vs zerolog) - Logging
+[Open Telemetry](https://github.com/open-telemetry/opentelemetry-go) - Metrics and tracing

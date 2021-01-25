@@ -2,39 +2,26 @@ version: "3"
 
 services:
   # Applications
-  entrypoint:
-    image: pipeline-entrypoint:0.0.1
+  api_gateway:
+    image: pipeline-api_gateway:0.0.1
     working_dir: /app
+    environment:
+      GOPROXY: direct
     volumes:
-        - ./apps/entrypoint:/app
+        - ./apps/api_gateway:/app
     ports:
       - 8080:8080
       - 8880:8888
     command: make run
 
-  enrichment:
-    image: pipeline-enrichment:0.0.1
-    working_dir: /app
-    volumes:
-        - ./apps/enrichment:/app
-    ports:
-      - 8081:8080
-      - 8881:8888
-    command: make run
+  # # Datastores
+  # redis:
+  #   image: redis:6.0.9
+  #   volumes:
+  #     - ./local/redis.conf:/usr/local/etc/redis/redis.conf
 
-  response-builder:
-    image: pipeline-response-builder:0.0.1
-    working_dir: /app
-    volumes:
-        - ./apps/response-builder:/app
-    ports:
-      - 8082:8080
-      - 8882:8888
-    command: make run
-
-  # Datastores
-  redis:
-    image: redis:6.0.9
-    volumes:
-      - ./local/redis.conf:/usr/local/etc/redis/redis.conf
   # Monitoring
+  jaeger:
+    image: jaegertracing/all-in-one:1.21.0
+    ports:
+      - 16686:16686

@@ -6,12 +6,15 @@ import (
 	"os/signal"
 
 	"github.com/gorilla/mux"
+	middleware "go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 
-	"github.com/mjmcconnell/go_gke_pipeline/apps/entrypoint/pkg/endpoints"
-	"github.com/mjmcconnell/go_gke_pipeline/apps/entrypoint/pkg/monitoring"
+	"github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/pkg/endpoints"
+	"github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/pkg/monitoring"
 )
 
 func Run() error {
+	tracingCleanup := monitoring.InitTracer()
+	defer tracingCleanup()
 
 	srvError := make(chan error)
 	// Start the private server
@@ -33,6 +36,7 @@ func Run() error {
 func startPublicServer() error {
 	router := mux.NewRouter()
 	router.Use(monitoring.LoggingMiddleware)
+	router.Use(middleware.Middleware("api-gateway"))
 
 	endpoints.MainHandler{}.Register(router)
 	err := http.ListenAndServe(":8080", router)

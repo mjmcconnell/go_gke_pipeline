@@ -9,9 +9,9 @@ GO_COVER_EXCLUDE := "_mock.go"
 help: ## Lists all commands.
 	${Q} fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: watcher.install
+.PHONY: run
 run: watcher.install
-	cd cmd/enrichment/ && watcher
+	cd cmd/api_gateway/ && watcher
 
 .PHONY: watcher.install
 watcher.install: go.mod
@@ -20,4 +20,4 @@ watcher.install: go.mod
 .PHONY: go.build
 go.build:
 	rm -rf ${BUILD_DIR}
-	go build -o ${BINARY_DIR}/enrichment github.com/mjmcconnell/go_gke_pipeline/apps/enrichment/cmd/enrichment
+	go build -o ${BINARY_DIR}/api_gateway github.com/mjmcconnell/go_gke_pipeline/apps/api_gateway/cmd/api_gateway

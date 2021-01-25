@@ -33,10 +33,16 @@ func (rw *loggingResponseWriter) WriteHeader(code int) {
 	return
 }
 
+func GetLogger() *logrus.Logger {
+	logger := logrus.New()
+	logger.Formatter = new(logrus.JSONFormatter)
+
+	return logger
+}
+
 func LoggingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logger := logrus.New()
-		logger.Formatter = new(logrus.JSONFormatter)
+		logger := GetLogger()
 
 		logger.WithFields(logrus.Fields{
 			"url":            r.URL.String(),
