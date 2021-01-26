@@ -7,6 +7,8 @@ services:
     working_dir: /app
     environment:
       GOPROXY: direct
+      FOOBAR_REQUEST_TOPIC: FOOBAR_REQUEST_TOPIC
+      FOOBAR_RESPONSE_SUBSCRIPTION: FOOBAR_RESPONSE_SUBSCRIPTION
     volumes:
         - ./apps/apigateway:/app
     ports:
@@ -17,12 +19,20 @@ services:
   foobar:
     image: pipeline-foobar:0.0.1
     working_dir: /app
+    environment:
+      REQUEST_SUBSCRIPTION: FOOBAR_REQUEST_SUBSCRIPTION
+      RESPONSE_TOPIC: FOOBAR_RESPONSE_TOPIC
     volumes:
         - ./apps/foobar:/app
     ports:
       - 8081:8080
     command: make run
 
+  # GCP PubSub emulator
+  pubsub:
+    image: messagebird/gcloud-pubsub-emulator
+    environment:
+      PUBSUB_PROJECT: PROJECTID,FOOBAR_REQUEST_TOPIC:FOOBAR_REQUEST_SUBSCRIPTION,FOOBAR_RESPONSE_TOPIC:FOOBAR_RESPONSE_SUBSCRIPTION
 
   # Monitoring
   jaeger:
