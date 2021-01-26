@@ -1,0 +1,11 @@
+ARG python_version
+
+FROM python:$python_version as builder
+
+ARG app_name
+
+WORKDIR /app
+
+COPY apps/$app_name /app
+
+RUN pip install -r requirements.txt

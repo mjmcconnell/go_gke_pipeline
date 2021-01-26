@@ -14,6 +14,16 @@ services:
       - 8880:8888
     command: make run
 
+  foobar:
+    image: pipeline-foobar:0.0.1
+    working_dir: /app
+    volumes:
+        - ./apps/foobar:/app
+    ports:
+      - 8081:8080
+    command: make run
+
+
   # Monitoring
   jaeger:
     image: jaegertracing/all-in-one:1.21.0
