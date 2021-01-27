@@ -7,8 +7,10 @@ services:
     working_dir: /app
     environment:
       GOPROXY: direct
-      FOOBAR_REQUEST_TOPIC: FOOBAR_REQUEST_TOPIC
-      FOOBAR_RESPONSE_SUBSCRIPTION: FOOBAR_RESPONSE_SUBSCRIPTION
+      PUBSUB_EMULATOR_HOST: pubsub:8432
+      PUBSUB_PROJECT_ID: my_project
+      PUBSUB_REQUEST_TOPIC: foobar_req_topic
+      PUBSUB_RESPONSE_SUBSCRIPTION: foobar_resp_sub
     volumes:
         - ./apps/apigateway:/app
     ports:
@@ -20,8 +22,8 @@ services:
     image: pipeline-foobar:0.0.1
     working_dir: /app
     environment:
-      REQUEST_SUBSCRIPTION: FOOBAR_REQUEST_SUBSCRIPTION
-      RESPONSE_TOPIC: FOOBAR_RESPONSE_TOPIC
+      REQUEST_SUBSCRIPTION: foobar_req_sub
+      RESPONSE_TOPIC: foobar_resp_topic
     volumes:
         - ./apps/foobar:/app
     ports:
@@ -32,7 +34,7 @@ services:
   pubsub:
     image: messagebird/gcloud-pubsub-emulator
     environment:
-      PUBSUB_PROJECT: PROJECTID,FOOBAR_REQUEST_TOPIC:FOOBAR_REQUEST_SUBSCRIPTION,FOOBAR_RESPONSE_TOPIC:FOOBAR_RESPONSE_SUBSCRIPTION
+      PUBSUB_PROJECT: my_project,foobar_req_topic:foobar_req_sub,foobar_resp_topic:foobar_resp_sub
 
   # Monitoring
   jaeger:
