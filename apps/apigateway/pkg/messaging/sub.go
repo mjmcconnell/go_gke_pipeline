@@ -10,8 +10,6 @@ import (
 	"github.com/mjmcconnell/go_gke_pipeline/apps/apigateway/pkg/monitoring"
 )
 
-var logger = monitoring.GetLogger()
-
 type Sub struct {
 	ProjectID      string
 	SubscriptionID string
@@ -19,8 +17,7 @@ type Sub struct {
 	sub            *pubsub.Subscription
 }
 
-func (s Sub) New() (Sub, error) {
-	ctx := context.Background()
+func (s Sub) New(ctx context.Context) (Sub, error) {
 	client, err := pubsub.NewClient(ctx, s.ProjectID)
 
 	if err != nil {
@@ -46,6 +43,7 @@ func (s Sub) Listen(ctx context.Context) error {
 }
 
 func (s Sub) handleMessage(msg *pubsub.Message) {
+	logger := monitoring.GetLogger()
 	logger.WithFields(logrus.Fields{
 		"ID":          msg.ID,
 		"payload":     string(msg.Data),

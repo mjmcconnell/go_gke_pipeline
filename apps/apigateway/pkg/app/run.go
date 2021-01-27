@@ -18,7 +18,7 @@ import (
 func Run() error {
 	ctx := context.Background()
 
-	settings := config.Settings{}.New()
+	settings := config.Settings{}.New(ctx)
 
 	logger := monitoring.GetLogger()
 	tracingCleanup := monitoring.InitTracer(settings)
